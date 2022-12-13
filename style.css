@@ -19,12 +19,19 @@
     border: solid 2px black;
     border-radius: 4px;
     margin: 5px;
-    margin-bottom: 10px;
     padding: 5px;
+    margin-bottom: 10px;
     text-align: end;
-    font-size: 38px;
-    height: 45px;
+    height: 65px;
     background-color: #FFFBE9;
+}
+
+.bottom {
+    font-size: 38px;
+}
+
+.top {
+    font-size: 18px;
 }
 
 button {
