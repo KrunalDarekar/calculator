@@ -35,6 +35,7 @@ const display = document.querySelector('.display');
 const digitButtons = document.querySelectorAll('.digit');
 const operatorButtons = document.querySelectorAll('.operator');
 const operateButton = document.querySelector('.equals');
+const allClearButton = document.querySelector('.allClear');
 
 let arguments = [];
 let argumentNo = 0;
@@ -45,7 +46,7 @@ digitButtons.forEach((button) => {
     button.addEventListener('click', () => {
         display.textContent += button.textContent;
     })
-})
+});
 
 operatorButtons.forEach((button) => {
     button.addEventListener('click', () => {
@@ -56,8 +57,8 @@ operatorButtons.forEach((button) => {
         console.log(operators[operatorNo]);
         argumentNo++;
         operatorNo++;
-    })
-})
+    });
+});
 
 operateButton.addEventListener('click', () => {
     arguments[argumentNo] = parseInt(display.textContent);
@@ -77,4 +78,14 @@ operateButton.addEventListener('click', () => {
         }
     }
     display.textContent = `${newArgument}`;
-})
+});
+
+allClearButton.addEventListener('click' , allClear);
+
+function allClear() {
+    display.textContent = '';
+    argumentNo = 0;
+    operatorNo = 0;
+    arguments = [];
+    operators = [];
+}
