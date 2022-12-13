@@ -54,3 +54,19 @@ button:hover {
 .allClear:hover {
     background-color: #F7A4A4;
 }
+
+.equals {
+    background-color: #BAD1C2;
+}
+
+.equals:hover {
+    background-color: #4FA095;
+}
+
+.operator {
+    background-color: #E1FFEE;
+}
+
+.operator:hover {
+    background-color: #A5F1E9;
+}
