@@ -31,61 +31,82 @@ function operate(a, operator ,b) {
     }
 }
 
-const display = document.querySelector('.display');
+const displayTop = document.querySelector('.top')
+const displayBottom = document.querySelector('.bottom');
 const digitButtons = document.querySelectorAll('.digit');
 const operatorButtons = document.querySelectorAll('.operator');
 const operateButton = document.querySelector('.equals');
 const allClearButton = document.querySelector('.allClear');
 
-let arguments = [];
-let argumentNo = 0;
-let operators = [];
-let operatorNo = 0;
+let argument1;
+let argument2;
+let operator;
 
 digitButtons.forEach((button) => {
     button.addEventListener('click', () => {
-        display.textContent += button.textContent;
+        displayBottom.textContent += button.textContent;
     })
 });
 
 operatorButtons.forEach((button) => {
     button.addEventListener('click', () => {
-        arguments[argumentNo] = parseInt(display.textContent);
-        operators[operatorNo] = button.textContent;
-        display.textContent = "";
-        console.log(arguments[argumentNo]);
-        console.log(operators[operatorNo]);
-        argumentNo++;
-        operatorNo++;
+        if(!argument1 && argument1 != 0) {
+            argument1 = parseInt(displayBottom.textContent);
+            displayTop.textContent += displayBottom.textContent + button.textContent;
+            displayBottom.textContent ='';
+        } else if(!argument2 && argument2 != 0) {
+            argument2 = parseInt(displayBottom.textContent); 
+            if(operator == '/' && argument2 == 0) {
+                alert('cannot divide by 0')
+                allClear();
+                return;
+            }
+            displayTop.textContent = `${Math.round((operate(argument1, operator, argument2)) * 100) / 100}` + button.textContent;
+            argument1 = Math.round((operate(argument1, operator, argument2)) * 100) / 100;
+            displayBottom.textContent ='';
+        } else {
+            argument2 = parseInt(displayBottom.textContent);
+            if(operator == '/' && argument2 == 0) {
+                alert('cannot divide by 0')
+                allClear();
+                return;
+            }
+            displayTop.textContent = `${Math.round((operate(argument1, operator, argument2)) * 100) / 100}` + button.textContent;
+            argument1 = Math.round((operate(argument1, operator, argument2)) * 100) / 100;
+            displayBottom.textContent ='';
+        }
+        operator = button.textContent;
+        console.log(argument1,'argument1')
+        console.log(argument2,'argument2')
+        console.log(operator);
     });
 });
 
 operateButton.addEventListener('click', () => {
-    arguments[argumentNo] = parseInt(display.textContent);
-    console.log(arguments[argumentNo]);
-    console.table(arguments);
-    console.table(operators);
-    let prevArgument;
-    let newArgument;
-    for(let i = 0; i < operators.length; i++) {
-        if( i == 0 ) {
-            newArgument = operate(arguments[0],operators[i],arguments[1]);
-        } else {
-            prevArgument = newArgument;
-            console.log(prevArgument)
-            newArgument = operate(prevArgument,operators[i],arguments[i+1]);
-            console.log(newArgument);
-        }
+    if(!displayBottom.textContent){
+        alert('please enter a number return');
+        return;
     }
-    display.textContent = `${newArgument}`;
+    argument2 = parseInt(displayBottom.textContent);
+    if(operator == '/' && argument2 == 0) {
+        alert('cannot divide by 0')
+        allClear();
+        return;
+    }
+    if(!(!argument1 && argument1 != 0)){
+        displayBottom.textContent = `${Math.round((operate(argument1, operator, argument2)) * 100) / 100}`;
+    }
+    displayTop.textContent += argument2 + '=';
+    argument1 = 0;
+    operator = '+';
 });
 
 allClearButton.addEventListener('click' , allClear);
 
 function allClear() {
-    display.textContent = '';
-    argumentNo = 0;
-    operatorNo = 0;
-    arguments = [];
-    operators = [];
+    displayBottom.textContent = '';
+    displayTop.textContent= '';
+    argument1 = undefined;
+    argument2 = undefined;
+    operator = '';
 }
